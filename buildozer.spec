@@ -1,48 +1,52 @@
 [app]
 
-# Название приложения (отображается под иконкой)
+# Название приложения
 title = Трубомер
 
-# Внутреннее имя пакета (только латиница)
+# Внутреннее имя пакета
 package.name = pipemeasurer
 
-# Домен для уникальности пакета
+# Домен
 package.domain = org.yourcompany
 
-# Версия приложения
+# Версия
 version = 1.0.0
 
-# Директория с исходным кодом (текущая папка)
+# Директория с исходным кодом
 source.dir = .
 
-# Включаемые расширения файлов
+# Включаемые расширения
 source.include_exts = py,png,jpg,kv,atlas,ttf,txt,json
 
 # Исключаемые директории
 source.exclude_dirs = tests, bin, .git, __pycache__
 
-# Иконка приложения (обязательно должна быть в репозитории!)
+# Иконка
 icon.filename = icon.png
 
-# Зависимости (минимальный набор для теста)
+# Зависимости
 requirements = python3,kivy
 
-# Разрешения Android
+# Разрешения
 android.permissions = INTERNET, RECORD_AUDIO
 
-# Версии Android SDK/NDK
+# Версии Android (исправлено)
 android.api = 30
 android.minapi = 21
 android.ndk = 23b
+android.sdk = 30
+
+# Не использовать build-tools 37 (старая версия)
+android.accept_sdk_license = True
 
 # Внешний вид
 fullscreen = 0
 orientation = portrait
 
-# Kivy версия
+# Kivy
 kivy_version = 2.1.0
 
-# Папки для сборки
+# Папки сборки
 build_dir = .buildozer
 dist_dir = bin
 
