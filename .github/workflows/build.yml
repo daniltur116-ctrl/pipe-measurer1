@@ -36,9 +36,18 @@ jobs:
         pip install buildozer
         pip install cython
     
+    - name: Accept Android SDK licenses
+      run: |
+        # Создаем директорию для лицензий
+        mkdir -p ~/.android
+        # Принимаем все лицензии автоматически
+        echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55\nd56f5187479451eabf01fb78af6dfcb131a6481e" > ~/.android/repositories.cfg
+        # Устанавливаем SDK и принимаем лицензии
+        yes | ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses || true
+    
     - name: Build APK
       run: |
-        buildozer android debug
+        buildozer android debug --verbose
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
