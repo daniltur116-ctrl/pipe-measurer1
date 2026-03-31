@@ -29,8 +29,7 @@ jobs:
           python3-pip autoconf libtool pkg-config \
           zlib1g-dev libncurses5-dev libncursesw5-dev \
           cmake libffi-dev libssl-dev \
-          automake libltdl-dev \
-          wget
+          automake libltdl-dev
     
     - name: Install Buildozer
       run: |
@@ -38,20 +37,11 @@ jobs:
         pip install buildozer
         pip install cython
     
-    - name: Build APK with verbose logging
+    - name: Build APK
       run: |
         buildozer android debug --verbose
-      continue-on-error: true
-    
-    - name: Show build log if failed
-      if: failure()
-      run: |
-        echo "========== BUILD FAILED =========="
-        echo "Last 200 lines of buildozer log:"
-        tail -n 200 .buildozer/logs/build.log 2>/dev/null || echo "Log file not found"
     
     - name: Upload APK
-      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: pipe-measurer-apk
