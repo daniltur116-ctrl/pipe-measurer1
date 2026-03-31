@@ -18,10 +18,11 @@ requirements = python3,kivy
 # Разрешения
 android.permissions = INTERNET, RECORD_AUDIO
 
-# Android настройки
+# Android настройки (ИСПРАВЛЕНО)
 android.api = 30
 android.minapi = 21
-android.ndk = 23b
+android.ndk = 25b          # ← изменено с 23b на 25b
+android.sdk = 30
 
 # Автопринятие лицензий
 android.accept_sdk_license = True
