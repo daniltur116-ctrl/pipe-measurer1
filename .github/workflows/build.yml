@@ -1,0 +1,54 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:  # Позволяет запускать вручную
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          git zip unzip openjdk-11-jdk \
+          python3-pip autoconf libtool pkg-config \
+          zlib1g-dev libncurses5-dev libncursesw5-dev \
+          libtinfo5 cmake libffi-dev libssl-dev \
+          automake libltdl-dev
+    
+    - name: Install Buildozer
+      run: |
+        pip install buildozer
+        pip install cython
+    
+    - name: Create buildozer.spec
+      run: |
+        # Проверяем, есть ли уже buildozer.spec
+        if [ ! -f buildozer.spec ]; then
+          buildozer init
+        fi
+    
+    - name: Build APK
+      run: |
+        buildozer -v android debug
+      env:
+        # Увеличиваем таймаут для долгих операций
+        BUILD_NUMBER: ${{ github.run_number }}
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: pipe-measurer-apk
+        path: bin/*.apk
