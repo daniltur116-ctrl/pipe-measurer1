@@ -3,7 +3,7 @@ name: Build APK
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch:  # Позволяет запускать вручную
+  workflow_dispatch:
 
 jobs:
   build:
@@ -33,22 +33,13 @@ jobs:
         pip install buildozer
         pip install cython
     
-    - name: Create buildozer.spec
-      run: |
-        # Проверяем, есть ли уже buildozer.spec
-        if [ ! -f buildozer.spec ]; then
-          buildozer init
-        fi
-    
     - name: Build APK
       run: |
-        buildozer -v android debug
-      env:
-        # Увеличиваем таймаут для долгих операций
-        BUILD_NUMBER: ${{ github.run_number }}
+        buildozer android debug
     
     - name: Upload APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: pipe-measurer-apk
         path: bin/*.apk
+        compression-level: 0
